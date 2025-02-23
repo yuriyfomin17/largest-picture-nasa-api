@@ -1,0 +1,6 @@
+CREATE TABLE pictures
+(
+    sol INTEGER NOT NULL PRIMARY KEY,
+    img_src VARCHAR(2048) NOT NULL ,
+    size INTEGER NOT NULL
+);

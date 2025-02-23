@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+#  app:
+#    depends_on:
+#      - postgres
+#      - rabbitmq
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - 8080:8080
+#    environment:
+#      HTTP_ADDR: ":8080"
+#      DEBUG_ERRORS: 1
+#      DSN: "postgres://postgres:password@postgres/postgres?sslmode=disable"
+#      MIGRATIONS_PATH: "file://migrations"
+#      RABBITMQ_URL: "amqp://guest:guest@rabbitmq:5672/"
+#    command: ["./wait-for-it.sh", "postgres:5432", "--timeout=3", "--", "./app"]
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=images
+    volumes:
+      - ./internal/pg/data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:management
+    restart: always
+    ports:
+      - "5673:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
