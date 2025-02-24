@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "0be39263-2cd0-434d-84d7-0421b6f97a04",
+		"name": "NASA API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25940033"
+	},
+	"item": [
+		{
+			"name": "POST_COMMAND",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sol\": 16\n    \n\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/mars/pictures/largest/command",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"mars",
+						"pictures",
+						"largest",
+						"command"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_PICTURE_BY_SOL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/mars/pictures/largest/command/14",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"mars",
+						"pictures",
+						"largest",
+						"command",
+						"14"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
