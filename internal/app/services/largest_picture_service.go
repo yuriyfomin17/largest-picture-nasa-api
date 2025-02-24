@@ -5,21 +5,20 @@ import (
 	"errors"
 	"fmt"
 	"github.com/rs/zerolog/log"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"golang.org/x/sync/errgroup"
-	"largest-picture-nasa-api/internal/app/domain"
-	"largest-picture-nasa-api/internal/pkg"
 	"sort"
 	"strconv"
 )
 
 type LargestPictureService struct {
-	rabbitMQClient pkg.RabbitMQ
+	rabbitMQClient RabbitMQClient
 	pictureRepo    PictureRepository
 	nasaAPIClient  NasaAPIClient
 }
 
 func NewLargestPictureService(
-	rabbitMQClient pkg.RabbitMQ,
+	rabbitMQClient RabbitMQClient,
 	pictureRepo PictureRepository,
 	nasaApiClient NasaAPIClient,
 ) LargestPictureService {

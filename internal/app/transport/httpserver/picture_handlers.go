@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/gorilla/mux"
-	"largest-picture-nasa-api/internal/app/common/server"
-	"largest-picture-nasa-api/internal/app/domain"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/common/server"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"net/http"
 	"strconv"
 )
@@ -33,11 +33,6 @@ func (h HttpServer) PostCommandHandler(w http.ResponseWriter, r *http.Request) {
 
 func (h HttpServer) GetLargestPictureHandler(w http.ResponseWriter, r *http.Request) {
 	solStr := mux.Vars(r)["sol"] // Extract path variable
-	if solStr == "" {
-		server.BadRequest("invalid-command", errors.New("empty sol"), w, r)
-		return
-	}
-
 	sol, err := strconv.Atoi(solStr)
 	if err != nil {
 		server.BadRequest("invalid-command", errors.New("invalid sol"), w, r)

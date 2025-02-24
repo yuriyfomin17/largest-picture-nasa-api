@@ -36,3 +36,7 @@ time period that NASA use to divide mission days.
 - docker compose + Makefile included
 - PostgreSQL migrations included
 - Postman collection included
+
+## Small Demo
+url - https://www.loom.com/share/4b4d889b8cc04bc19d347f800cc28b05?sid=d37e746a-3356-45f6-90d6-42182164ae61
+

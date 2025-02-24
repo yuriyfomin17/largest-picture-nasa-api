@@ -1,8 +1,8 @@
 package pgrepo
 
 import (
-	"largest-picture-nasa-api/internal/app/domain"
-	"largest-picture-nasa-api/internal/app/repository/models"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/repository/models"
 )
 
 func toDomainPicture(picture models.Picture) domain.Picture {

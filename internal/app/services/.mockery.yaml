@@ -4,6 +4,9 @@ outpkg: "mocks"
 mockname: "{{.InterfaceNameCamel}}"
 filename: "{{.InterfaceNameSnake}}_mock.go"
 packages:
-  github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/transport/httpserver:
+  github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/services:
     interfaces:
-      MarsApiLargestPictureService:
+      PictureRepository:
+      NasaAPIClient:
+      RabbitMQClient:
+

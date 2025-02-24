@@ -1,9 +1,12 @@
+//go:generate mockery
+
 package services
 
 import (
 	"context"
-	"largest-picture-nasa-api/internal/app/clients/models"
-	"largest-picture-nasa-api/internal/app/domain"
+	"github.com/streadway/amqp"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 )
 
 type PictureRepository interface {
@@ -15,4 +18,9 @@ type PictureRepository interface {
 type NasaAPIClient interface {
 	FindNasaPhotos(ctx context.Context, sol int) (models.NasaPhotos, error)
 	FindPhotoSize(ctx *context.Context, imgUrl string) (int, error)
+}
+
+type RabbitMQClient interface {
+	PublishCommand(solCommand int)
+	GetMessage() <-chan amqp.Delivery
 }

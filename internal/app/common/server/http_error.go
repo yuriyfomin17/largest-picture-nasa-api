@@ -2,40 +2,17 @@ package server
 
 import (
 	"encoding/json"
-	"errors"
-	"largest-picture-nasa-api/internal/app/common/slugerrors"
 	"log"
 	"net/http"
 	"os"
 )
-
-func InternalError(slug string, err error, w http.ResponseWriter, r *http.Request) {
-	httpRespondWithError(err, slug, w, r, "Internal server error", http.StatusInternalServerError)
-}
 
 func BadRequest(slug string, err error, w http.ResponseWriter, r *http.Request) {
 	httpRespondWithError(err, slug, w, r, "Bad request", http.StatusBadRequest)
 }
 
 func NotFound(slug string, err error, w http.ResponseWriter, r *http.Request) {
-	httpRespondWithError(err, slug, w, r, "Not found", http.StatusBadRequest)
-}
-
-func RespondWithError(err error, w http.ResponseWriter, r *http.Request) {
-	var slugError slugerrors.SlugError
-	if !errors.As(err, &slugError) {
-		InternalError("internal-server-error", err, w, r)
-		return
-	}
-
-	switch slugError.ErrorType() {
-	case slugerrors.ErrorTypeBadRequest:
-		BadRequest(slugError.Slug(), slugError, w, r)
-	case slugerrors.ErrorTypeNotFound:
-		NotFound(slugError.Slug(), slugError, w, r)
-	default:
-		InternalError(slugError.Slug(), slugError, w, r)
-	}
+	httpRespondWithError(err, slug, w, r, "Not found", http.StatusNotFound)
 }
 
 func httpRespondWithError(err error, slug string, w http.ResponseWriter, r *http.Request, msg string, status int) {

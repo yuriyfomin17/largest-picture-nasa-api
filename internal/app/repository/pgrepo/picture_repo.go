@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"largest-picture-nasa-api/internal/app/domain"
-	"largest-picture-nasa-api/internal/app/repository/models"
-	"largest-picture-nasa-api/internal/pkg"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/repository/models"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/pkg"
 )
 
 type PictureRepo struct {

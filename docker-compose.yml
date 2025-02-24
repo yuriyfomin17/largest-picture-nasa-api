@@ -15,8 +15,8 @@ services:
       DEBUG_ERRORS: 1
       DSN: "postgres://postgres:password@postgres/postgres?sslmode=disable"
       MIGRATIONS_PATH: "file://migrations"
-      RABBITMQ_URL: "amqp://guest:guest@rabbitmq:5673/"
-    command: ["./wait-for-it.sh", "postgres:5433", "--timeout=10", "--", "./app"]
+      RABBITMQ_URL: "amqp://guest:guest@rabbitmq:5672/"
+    command: ["./wait-for-it.sh", "postgres:5432", "rabbitmq:5672", "--timeout=10", "--", "./app"]
 
   postgres:
     restart: always

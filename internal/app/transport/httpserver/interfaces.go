@@ -4,7 +4,8 @@ package httpserver
 
 import (
 	"context"
-	"largest-picture-nasa-api/internal/app/domain"
+
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 )
 
 // MarsApiLargestPictureService is picture service

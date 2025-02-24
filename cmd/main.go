@@ -8,12 +8,12 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/gorilla/mux"
-	"largest-picture-nasa-api/internal/app/clients"
-	"largest-picture-nasa-api/internal/app/config"
-	"largest-picture-nasa-api/internal/app/repository/pgrepo"
-	"largest-picture-nasa-api/internal/app/services"
-	"largest-picture-nasa-api/internal/app/transport/httpserver"
-	"largest-picture-nasa-api/internal/pkg"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/config"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/repository/pgrepo"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/services"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/transport/httpserver"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/pkg"
 	"log"
 	"net/http"
 	"os"
@@ -51,7 +51,7 @@ func run() error {
 
 	nasaApiClient := clients.NewNasaApiClient(cfg.APIKey, cfg.APIUrl)
 	largestPictureService := services.NewLargestPictureService(
-		*mq,
+		mq,
 		&pictureRepo,
 		nasaApiClient,
 	)
