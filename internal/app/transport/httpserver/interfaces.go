@@ -7,8 +7,8 @@ import (
 	"largest-picture-nasa-api/internal/app/domain"
 )
 
-// MarsAPILargestPictureService is picture service
-type MarsAPILargestPictureService interface {
+// MarsApiLargestPictureService is picture service
+type MarsApiLargestPictureService interface {
 	GetPictureBySol(ctx context.Context, sol int) (domain.Picture, error)
 	CheckIfPictureExistsSaveIfNecessary(ctx context.Context, sol int)
 	PublishCommand(ctx context.Context, sol int)

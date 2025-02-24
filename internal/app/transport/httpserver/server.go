@@ -1,10 +1,10 @@
 package httpserver
 
 type HttpServer struct {
-	largestPictureService MarsAPILargestPictureService
+	largestPictureService MarsApiLargestPictureService
 }
 
-func NewHttpServer(largestPictureService MarsAPILargestPictureService) HttpServer {
+func NewHttpServer(largestPictureService MarsApiLargestPictureService) HttpServer {
 	return HttpServer{
 		largestPictureService: largestPictureService,
 	}
