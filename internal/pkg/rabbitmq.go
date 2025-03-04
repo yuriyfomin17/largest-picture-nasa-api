@@ -75,7 +75,7 @@ func ConnectRabbitMQ(rabbitMQURL string) (*RabbitMQ, error) {
 	}, nil
 }
 
-func (r *RabbitMQ) PublishCommand(solCommand int) {
+func (r *RabbitMQ) PublishCommand(solCommand int) error {
 	byteArrayCommand := []byte(strconv.Itoa(solCommand))
 	err := r.channel.Publish(
 		RabbitmqExchange,   // Exchange
@@ -87,10 +87,7 @@ func (r *RabbitMQ) PublishCommand(solCommand int) {
 			Body:        byteArrayCommand,
 		},
 	)
-	if err != nil {
-		log.Printf("failed to publish command: %v", err)
-		return
-	}
+	return err
 }
 
 // GetMessage messages from the queue

@@ -22,6 +22,6 @@ type NasaAPIClient interface {
 }
 
 type RabbitMQClient interface {
-	PublishCommand(solCommand int)
+	PublishCommand(solCommand int) error
 	GetMessage() <-chan amqp.Delivery
 }

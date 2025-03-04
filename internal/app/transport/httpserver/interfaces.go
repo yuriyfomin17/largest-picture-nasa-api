@@ -12,6 +12,6 @@ import (
 type MarsApiLargestPictureService interface {
 	GetPictureBySol(ctx context.Context, sol int) (domain.Picture, error)
 	CheckIfPictureExistsSaveIfNecessary(ctx context.Context, sol int)
-	PublishCommand(ctx context.Context, sol int)
+	PublishCommand(sol int) error
 	StartListeningSolCommands()
 }

@@ -29,20 +29,8 @@ func NewLargestPictureService(
 		nasaAPIClient:  nasaApiClient,
 	}
 }
-func (lps LargestPictureService) PublishCommand(ctx context.Context, sol int) {
-	done := make(chan struct{}, 1)
-	go func() {
-		lps.rabbitMQClient.PublishCommand(sol)
-		done <- struct{}{}
-	}()
-	select {
-	case <-ctx.Done(): // Handle context cancellation or timeout
-		log.Printf("context cancelled: %v", ctx.Err())
-		return
-	case <-done: // Return the result of the publish operation
-		log.Info().Msg("Command published successfully")
-		return
-	}
+func (lps LargestPictureService) PublishCommand(sol int) error {
+	return lps.rabbitMQClient.PublishCommand(sol)
 }
 
 func (lps LargestPictureService) GetPictureBySol(ctx context.Context, sol int) (domain.Picture, error) {
