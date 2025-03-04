@@ -48,6 +48,10 @@ func (h HttpServer) GetLargestPictureHandler(w http.ResponseWriter, r *http.Requ
 		server.NotFound("not-found", domain.ErrNotFound, w, r)
 		return
 	}
+	if err != nil {
+		server.InternalError("could-not-get-picture", err, w, r)
+		return
+	}
 	server.RespondOK(server.SuccessResponse{
 		Sol:     picture.GetSol(),
 		ImgSrc:  picture.GetUrl(),

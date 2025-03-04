@@ -7,6 +7,10 @@ import (
 	"os"
 )
 
+func InternalError(slug string, err error, w http.ResponseWriter, r *http.Request) {
+	httpRespondWithError(err, slug, w, r, "Internal server error", http.StatusInternalServerError)
+}
+
 func BadRequest(slug string, err error, w http.ResponseWriter, r *http.Request) {
 	httpRespondWithError(err, slug, w, r, "Bad request", http.StatusBadRequest)
 }
