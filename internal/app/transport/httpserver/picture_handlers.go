@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/gorilla/mux"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/common/server"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
-	"net/http"
-	"strconv"
 )
 
 func (h HttpServer) PostCommandHandler(w http.ResponseWriter, r *http.Request) {

@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sort"
+	"strconv"
+
 	"github.com/rs/zerolog/log"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"golang.org/x/sync/errgroup"
-	"sort"
-	"strconv"
 )
 
 type LargestPictureService struct {

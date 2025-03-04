@@ -4,14 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sheepla/go-urlbuilder"
-	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/sheepla/go-urlbuilder"
+	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
 )
 
 var HTTPClient = http.Client{

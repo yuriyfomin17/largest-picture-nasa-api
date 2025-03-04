@@ -2,9 +2,10 @@ package pkg
 
 import (
 	"errors"
+	"strconv"
+
 	"github.com/rs/zerolog/log"
 	"github.com/streadway/amqp"
-	"strconv"
 )
 
 type RabbitMQ struct {

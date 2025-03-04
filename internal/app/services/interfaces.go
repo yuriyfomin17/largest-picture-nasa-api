@@ -4,6 +4,7 @@ package services
 
 import (
 	"context"
+
 	"github.com/streadway/amqp"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"

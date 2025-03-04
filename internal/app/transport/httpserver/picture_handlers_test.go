@@ -3,14 +3,15 @@ package httpserver
 import (
 	"bytes"
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/transport/httpserver/mocks"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 const commandEndpoint = "/mars/pictures/largest/command"

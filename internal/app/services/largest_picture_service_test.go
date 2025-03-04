@@ -3,12 +3,13 @@ package services
 import (
 	"context"
 	"errors"
+	"testing"
+
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/services/mocks"
-	"testing"
 )
 
 func TestLargestPictureService_PublishCommand(t *testing.T) {
