@@ -22,7 +22,7 @@ func TestLargestPictureService_PublishCommand(t *testing.T) {
 			name: "Should publish command successfully",
 			sol:  123,
 			mockSetup: func(m *mocks.RabbitMqclient) {
-				m.On("PublishCommand", 123).Return(nil).Once()
+				m.On("PublishCommand", mock.Anything, 123).Return(nil).Once()
 			},
 		},
 		{
@@ -30,7 +30,7 @@ func TestLargestPictureService_PublishCommand(t *testing.T) {
 			sol:  456,
 			mockSetup: func(m *mocks.RabbitMqclient) {
 				// Simulate no call since context cancels
-				m.On("PublishCommand", mock.Anything).Return(nil).Maybe()
+				m.On("PublishCommand", mock.Anything, mock.Anything).Return(nil).Maybe()
 			},
 		},
 	}
@@ -95,7 +95,7 @@ func TestLargestPictureService_GetPictureBySol(t *testing.T) {
 			mockSetup: func(m *mocks.PictureRepository) {
 				m.On("FindLargestPictureBySol", mock.Anything, 789).Return(domain.Picture{}, errors.New("unexpected error")).Once()
 			},
-			expectedError:  errors.New("unexpected error"),
+			expectedError:  domain.ErrCalculationLargestPicture,
 			expectedResult: domain.Picture{},
 		},
 	}

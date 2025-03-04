@@ -25,7 +25,7 @@ func (h HttpServer) PostCommandHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.largestPictureService.PublishCommand(request.Sol)
+	err := h.largestPictureService.PublishCommand(r.Context(), request.Sol)
 
 	if err != nil {
 		server.BadRequest("could-not-publish-command", err, w, r)

@@ -1,11 +1,12 @@
 package pkg
 
 import (
+	"context"
 	"errors"
 	"strconv"
 
+	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"
-	"github.com/streadway/amqp"
 )
 
 type RabbitMQ struct {
@@ -75,18 +76,16 @@ func ConnectRabbitMQ(rabbitMQURL string) (*RabbitMQ, error) {
 	}, nil
 }
 
-func (r *RabbitMQ) PublishCommand(solCommand int) error {
+func (r *RabbitMQ) PublishCommand(ctx context.Context, solCommand int) error {
 	byteArrayCommand := []byte(strconv.Itoa(solCommand))
-	err := r.channel.Publish(
-		RabbitmqExchange,   // Exchange
+	err := r.channel.PublishWithContext(ctx, RabbitmqExchange, // Exchange
 		RabbitmqRoutingKey, // Routing key (queue)
 		false,              // Mandatory
 		false,              // Immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        byteArrayCommand,
-		},
-	)
+		})
 	return err
 }
 

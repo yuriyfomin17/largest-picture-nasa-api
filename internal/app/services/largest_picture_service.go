@@ -29,8 +29,8 @@ func NewLargestPictureService(
 		nasaAPIClient:  nasaApiClient,
 	}
 }
-func (lps LargestPictureService) PublishCommand(sol int) error {
-	return lps.rabbitMQClient.PublishCommand(sol)
+func (lps LargestPictureService) PublishCommand(ctx context.Context, sol int) error {
+	return lps.rabbitMQClient.PublishCommand(ctx, sol)
 }
 
 func (lps LargestPictureService) GetPictureBySol(ctx context.Context, sol int) (domain.Picture, error) {
@@ -39,12 +39,9 @@ func (lps LargestPictureService) GetPictureBySol(ctx context.Context, sol int) (
 	if err != nil && errors.Is(err, domain.ErrNotFound) {
 		return domain.Picture{}, domain.ErrNotFound
 	}
-	if err != nil && errors.Is(err, domain.ErrCalculationLargestPicture) {
-		return domain.Picture{}, domain.ErrCalculationLargestPicture
-	}
 
 	if err != nil {
-		return domain.Picture{}, fmt.Errorf("could not find picture by sol: %w", err)
+		return domain.Picture{}, domain.ErrCalculationLargestPicture
 	}
 	return pictureBySol, nil
 }
