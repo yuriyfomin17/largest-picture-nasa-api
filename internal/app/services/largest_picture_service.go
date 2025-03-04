@@ -44,7 +44,7 @@ func (lps LargestPictureService) GetPictureBySol(ctx context.Context, sol int) (
 	}
 
 	if err != nil {
-		return domain.Picture{}, err
+		return domain.Picture{}, fmt.Errorf("could not find picture by sol: %w", err)
 	}
 	return pictureBySol, nil
 }
