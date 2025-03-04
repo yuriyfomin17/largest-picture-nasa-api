@@ -53,9 +53,8 @@ func (h HttpServer) GetLargestPictureHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	server.RespondOK(server.SuccessResponse{
-		Sol:     picture.GetSol(),
-		ImgSrc:  picture.GetUrl(),
-		Size:    picture.GetSize(),
-		Message: "Command accepted. Largest picture calculation has started.",
+		Sol:    picture.GetSol(),
+		ImgSrc: picture.GetUrl(),
+		Size:   picture.GetSize(),
 	}, w)
 }
