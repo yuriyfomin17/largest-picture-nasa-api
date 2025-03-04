@@ -49,28 +49,28 @@ func (lps LargestPictureService) GetPictureBySol(ctx context.Context, sol int) (
 	return pictureBySol, nil
 }
 
-func (lps LargestPictureService) CheckIfPictureExistsSaveIfNecessary(ctx context.Context, sol int) {
+func (lps LargestPictureService) CheckIfPictureExistsSaveIfNecessary(ctx context.Context, sol int) error {
 	exists, err := lps.pictureRepo.Exists(ctx, sol)
 	if err != nil && !errors.Is(err, domain.ErrNotFound) {
-		log.Printf("failed to check if picture exists: %v", err)
-		return
+		return fmt.Errorf("failed to check if picture exists: %w", err)
 	}
 	if exists {
-		log.Printf("picture for sol %d already exists", sol)
-		return
+		return fmt.Errorf("picture for sol %d already exists", sol)
 	}
 	if err != nil {
-		log.Printf("failed to save picture: %v", err)
-		return
+		return fmt.Errorf("failed to save picture: %w", err)
 	}
-	lps.findLargestPictureViaAPI(ctx, sol)
+	err = lps.findLargestPictureViaAPI(ctx, sol)
+	if err != nil {
+		return fmt.Errorf("failed to find largest picture via API: %w", err)
+	}
+	return nil
 }
 
-func (lps LargestPictureService) findLargestPictureViaAPI(ctx context.Context, sol int) {
+func (lps LargestPictureService) findLargestPictureViaAPI(ctx context.Context, sol int) error {
 	photos, err := lps.nasaAPIClient.FindNasaPhotos(ctx, sol)
 	if err != nil {
-		log.Printf("failed to find nasa photos: %v", err)
-		return
+		return fmt.Errorf("failed to find nasa photos: %w", err)
 	}
 	g, currContext := errgroup.WithContext(ctx)
 	g.SetLimit(len(photos.Photos))
@@ -98,8 +98,7 @@ func (lps LargestPictureService) findLargestPictureViaAPI(ctx context.Context, s
 		})
 	}
 	if errorGroup := g.Wait(); errorGroup != nil {
-		log.Printf("errorGroup: %v", errorGroup)
-		return
+		return fmt.Errorf("errorGroup: %w", errorGroup)
 	}
 	close(nasaPhotoChannels)
 	nasaPhotos := make([]domain.NewPictureData, len(photos.Photos))
@@ -111,9 +110,9 @@ func (lps LargestPictureService) findLargestPictureViaAPI(ctx context.Context, s
 	})
 	err = lps.pictureRepo.Save(ctx, domain.NewPicture(nasaPhotos[0]))
 	if err != nil {
-		log.Printf("failed to save picture: %v", err)
-		return
+		return fmt.Errorf("failed to save picture: %w", err)
 	}
+	return nil
 }
 
 func (lps LargestPictureService) StartListeningSolCommands(ctx context.Context) {
@@ -125,7 +124,11 @@ func (lps LargestPictureService) StartListeningSolCommands(ctx context.Context) 
 				log.Printf("failed to convert string to int: %v", err)
 				return
 			}
-			lps.CheckIfPictureExistsSaveIfNecessary(ctx, solInt)
+			err = lps.CheckIfPictureExistsSaveIfNecessary(ctx, solInt)
+			if err != nil {
+				log.Printf("failed to check if picture exists: %v", err)
+				return
+			}
 		}
 	}()
 }
