@@ -116,9 +116,8 @@ func (lps LargestPictureService) findLargestPictureViaAPI(ctx context.Context, s
 	}
 }
 
-func (lps LargestPictureService) StartListeningSolCommands() {
-
-	go func(ctx context.Context) {
+func (lps LargestPictureService) StartListeningSolCommands(ctx context.Context) {
+	go func() {
 		for message := range lps.rabbitMQClient.GetMessage() {
 			strSol := string(message.Body)
 			solInt, err := strconv.Atoi(strSol)
@@ -128,6 +127,5 @@ func (lps LargestPictureService) StartListeningSolCommands() {
 			}
 			lps.CheckIfPictureExistsSaveIfNecessary(ctx, solInt)
 		}
-
-	}(context.TODO())
+	}()
 }

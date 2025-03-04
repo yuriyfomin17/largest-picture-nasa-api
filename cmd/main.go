@@ -56,7 +56,7 @@ func run() error {
 		&pictureRepo,
 		nasaApiClient,
 	)
-	largestPictureService.StartListeningSolCommands()
+	largestPictureService.StartListeningSolCommands(context.TODO())
 
 	largestPictureServer := httpserver.NewHttpServer(largestPictureService)
 
