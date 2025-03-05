@@ -4,7 +4,9 @@ package services
 
 import (
 	"context"
-	"github.com/streadway/amqp"
+
+	amqp "github.com/rabbitmq/amqp091-go"
+
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/clients/models"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 )
@@ -21,6 +23,6 @@ type NasaAPIClient interface {
 }
 
 type RabbitMQClient interface {
-	PublishCommand(solCommand int)
+	PublishCommand(ctx context.Context, solCommand int) error
 	GetMessage() <-chan amqp.Delivery
 }

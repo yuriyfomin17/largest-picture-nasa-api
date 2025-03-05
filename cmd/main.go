@@ -4,6 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -14,12 +21,6 @@ import (
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/services"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/transport/httpserver"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/pkg"
-	"log"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 func main() {
@@ -55,7 +56,7 @@ func run() error {
 		&pictureRepo,
 		nasaApiClient,
 	)
-	largestPictureService.StartListeningSolCommands()
+	largestPictureService.StartListeningSolCommands(context.TODO())
 
 	largestPictureServer := httpserver.NewHttpServer(largestPictureService)
 

@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/gorilla/mux"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/common/server"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
-	"net/http"
-	"strconv"
 )
 
 func (h HttpServer) PostCommandHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,10 +25,14 @@ func (h HttpServer) PostCommandHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.largestPictureService.PublishCommand(context.Background(), request.Sol)
+	err := h.largestPictureService.PublishCommand(r.Context(), request.Sol)
 
-	server.RespondOK(map[string]interface{}{
-		"message": "Command accepted. Largest picture calculation has started.",
+	if err != nil {
+		server.BadRequest("could-not-publish-command", err, w, r)
+		return
+	}
+	server.RespondOK(server.SuccessResponse{
+		Message: "Command accepted. Largest picture calculation has started.",
 	}, w)
 }
 
@@ -43,11 +48,13 @@ func (h HttpServer) GetLargestPictureHandler(w http.ResponseWriter, r *http.Requ
 		server.NotFound("not-found", domain.ErrNotFound, w, r)
 		return
 	}
-
-	server.RespondOK(map[string]interface{}{
-		"sol":     picture.GetSol(),
-		"img_src": picture.GetUrl(),
-		"size":    picture.GetSize(),
-		"message": "Largest picture fetched successfully",
+	if err != nil {
+		server.InternalError("could-not-get-picture", err, w, r)
+		return
+	}
+	server.RespondOK(server.SuccessResponse{
+		Sol:    picture.GetSol(),
+		ImgSrc: picture.GetUrl(),
+		Size:   picture.GetSize(),
 	}, w)
 }

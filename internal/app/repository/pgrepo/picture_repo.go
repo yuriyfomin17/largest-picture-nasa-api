@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/repository/models"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/pkg"
@@ -29,7 +30,7 @@ func (r *PictureRepo) FindLargestPictureBySol(ctx context.Context, sol int) (dom
 		return domain.Picture{}, domain.ErrNotFound // No rows found, so it doesn't exist
 	}
 	if err != nil {
-		return domain.Picture{}, fmt.Errorf("could not find largest picture by sol: %w", err)
+		return domain.Picture{}, fmt.Errorf("could not find picture: %w", err)
 	}
 
 	return toDomainPicture(picture), nil

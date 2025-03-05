@@ -3,14 +3,15 @@ package httpserver
 import (
 	"bytes"
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/domain"
 	"github.com/yuriyfomin17/largest-picture-nasa-api/internal/app/transport/httpserver/mocks"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 const commandEndpoint = "/mars/pictures/largest/command"
@@ -121,7 +122,7 @@ func TestHttpServer_GetLargestPictureHandler(t *testing.T) {
 				require.Equal(t, 123.0, body["sol"])
 				require.Equal(t, "http://example.com/largest.jpg", body["img_src"])
 				require.Equal(t, 1048576.0, body["size"])
-				require.Equal(t, "Largest picture fetched successfully", body["message"])
+				require.Equal(t, "Command accepted. Largest picture calculation has started.", body["message"])
 			},
 		},
 		{

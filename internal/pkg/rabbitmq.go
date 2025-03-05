@@ -1,10 +1,13 @@
 package pkg
 
 import (
+	"context"
 	"errors"
-	"github.com/rs/zerolog/log"
-	"github.com/streadway/amqp"
+	"fmt"
 	"strconv"
+
+	amqp "github.com/rabbitmq/amqp091-go"
+	"github.com/rs/zerolog/log"
 )
 
 type RabbitMQ struct {
@@ -74,22 +77,17 @@ func ConnectRabbitMQ(rabbitMQURL string) (*RabbitMQ, error) {
 	}, nil
 }
 
-func (r *RabbitMQ) PublishCommand(solCommand int) {
+func (r *RabbitMQ) PublishCommand(ctx context.Context, solCommand int) error {
 	byteArrayCommand := []byte(strconv.Itoa(solCommand))
-	err := r.channel.Publish(
-		RabbitmqExchange,   // Exchange
+	err := r.channel.PublishWithContext(ctx, RabbitmqExchange, // Exchange
 		RabbitmqRoutingKey, // Routing key (queue)
 		false,              // Mandatory
 		false,              // Immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        byteArrayCommand,
-		},
-	)
-	if err != nil {
-		log.Printf("failed to publish command: %v", err)
-		return
-	}
+		})
+	return fmt.Errorf("failed to publish command: %w", err)
 }
 
 // GetMessage messages from the queue
