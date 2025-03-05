@@ -27,7 +27,7 @@ func Read() Config {
 	if exists {
 		config.DSN = dsn
 	} else {
-		config.DSN = "postgres://postgres:password@localhost:5433/postgres?sslmode=disable" // Default PostgreSQL DSN with localhost
+		config.DSN = "" // Default PostgreSQL DSN with localhost
 	}
 
 	migrationsPath, exists := os.LookupEnv("MIGRATIONS_PATH")
@@ -48,7 +48,7 @@ func Read() Config {
 	if exists {
 		config.APIKey = apiKey
 	} else {
-		config.APIKey = "hgOzFGgeBgBsmwbxc6fEjPiVcq2QfOV5i2oIl0sK" // Replace with your default API key
+		config.APIKey = "" // Replace with your default API key
 	}
 
 	apiUrl, exists := os.LookupEnv("API_URL")
