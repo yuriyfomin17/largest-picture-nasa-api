@@ -3,6 +3,7 @@ package pkg
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -86,7 +87,7 @@ func (r *RabbitMQ) PublishCommand(ctx context.Context, solCommand int) error {
 			ContentType: "text/plain",
 			Body:        byteArrayCommand,
 		})
-	return err
+	return fmt.Errorf("failed to publish command: %w", err)
 }
 
 // GetMessage messages from the queue
